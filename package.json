@@ -32,10 +32,14 @@
     "browser-sync-webpack-plugin": "^2.2.2",
     "cross-env": "^5.2.1",
     "css-loader": "^3.2.0",
+    "extract-loader": "^3.1.0",
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
+    "file-loader": "^4.2.0",
     "handlebars": "^4.2.0",
     "handlebars-loader": "^1.7.1",
+    "html-loader": "^0.5.5",
     "html-webpack-plugin": "^3.2.0",
+    "image-webpack-loader": "^6.0.0",
     "mini-css-extract-plugin": "^0.8.0",
     "node-sass": "^4.12.0",
     "optimize-css-assets-webpack-plugin": "^5.0.3",
@@ -44,6 +48,7 @@
     "sass-loader": "^8.0.0",
     "style-loader": "^1.0.0",
     "uglifyjs-webpack-plugin": "^2.2.0",
+    "url-loader": "^2.1.0",
     "webpack": "^4.40.2",
     "webpack-cli": "^3.3.8"
   }

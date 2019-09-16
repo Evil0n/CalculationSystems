@@ -10,10 +10,10 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 module.exports = {
-    mode:  isDevelopment ? 'development' : 'production',
+    mode: isDevelopment ? 'development' : 'production',
     entry: {
         bundle: './src/app.js'
-    } ,
+    },
     output: {
         path: path.resolve(__dirname, 'dist')
     },
@@ -25,7 +25,22 @@ module.exports = {
     },
     module: {
         rules: [
-            { test: /\.hbs$/, loader: "handlebars-loader" },
+            {
+                test: /\.hbs$/, use: [
+                    {
+                        loader: "handlebars-loader"
+                    },
+                    {
+                        loader: 'extract-loader'
+                    },
+                    {
+                        loader: 'html-loader',
+                        options: {
+                            interpolate: true
+                        }
+                    }
+                ]
+            },
             {
                 test: /\.(scss|css)$/,
                 use: [
@@ -64,8 +79,7 @@ module.exports = {
                         loader: "file-loader",
                         options: {
                             name: '[name].[ext]',
-                            outputPath: 'dist/',
-                            useRelativePath: true,
+                            outputPath: 'images/'
                         }
                     },
                     {
@@ -128,7 +142,7 @@ module.exports = {
         new BrowserSyncPlugin({
             host: 'localhost',
             port: 3000,
-            server: { baseDir: ['./dist'] }
+            server: {baseDir: ['./dist']}
         })
     ],
     optimization: {
@@ -142,7 +156,7 @@ module.exports = {
             }),
             new OptimizeCSSAssetsPlugin({
                 cssProcessorPluginOptions: {
-                    preset: ['default', { discardComments: { removeAll: true } }],
+                    preset: ['default', {discardComments: {removeAll: true}}],
                 }
             })
         ]
