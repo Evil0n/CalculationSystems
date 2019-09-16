@@ -4,9 +4,13 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const autoprefixer = require('autoprefixer')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+
 const isDevelopment = process.env.NODE_ENV !== 'production'
+
 module.exports = {
-    mode:  process.env.NODE_ENV === 'production' ? 'production' : 'development',
+    mode:  isDevelopment ? 'development' : 'production',
     entry: {
         bundle: './src/app.js'
     } ,
@@ -91,7 +95,6 @@ module.exports = {
         ]
     },
     plugins: [
-        /** Since Webpack 4 */
         new webpack.LoaderOptionsPlugin({
             options: {
                 handlebarsLoader: {}
@@ -103,7 +106,6 @@ module.exports = {
         }),
 
         new HtmlWebpackPlugin({
-            title: 'My awesome service',
             template: './src/index.hbs',
             minify: !isDevelopment && {
                 html5: true,
@@ -114,11 +116,25 @@ module.exports = {
             },
         }),
         new BrowserSyncPlugin({
-            // browse to http://localhost:3000/ during development,
-            // ./public directory is being served
             host: 'localhost',
             port: 3000,
             server: { baseDir: ['./dist'] }
         })
-    ]
+    ],
+    optimization: {
+        minimizer: isDevelopment ? [] : [
+            new UglifyJsPlugin({
+                uglifyOptions: {
+                    output: {
+                        comments: false
+                    }
+                }
+            }),
+            new OptimizeCSSAssetsPlugin({
+                cssProcessorPluginOptions: {
+                    preset: ['default', { discardComments: { removeAll: true } }],
+                }
+            })
+        ]
+    }
 };
