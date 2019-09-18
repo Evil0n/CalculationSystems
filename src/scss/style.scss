@@ -36,3 +36,10 @@
 @import "~bootstrap/scss/spinners";
 @import "~bootstrap/scss/utilities";
 @import "~bootstrap/scss/print";
+
+.helpme {
+  display: none;
+  @media (min-width: 940px) {
+    display: block;
+  }
+}

@@ -26,6 +26,24 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /.(woff|woff2)$/,
+                use: 'url-loader?limit=10000',
+            },
+            {
+                test: /.(eot|svg|ttf)$/,
+                use: 'file-loader',
+            },
+
+// font-awesome
+            {
+                test: /font-awesome\.config\.js/,
+                use: [
+                    { loader: 'style-loader' },
+                    { loader: 'font-awesome-loader' }
+                ]
+            },
+
+            {
                 test: /\.hbs$/, use: [
                     {
                         loader: "handlebars-loader"
